@@ -1,14 +1,12 @@
 # markdown-viewer
 
-A lightweight single-file markdown viewer published with GitHub Pages.
+Simple static viewer that supports both `.md` and `.json` files.
 
-## Live site
+## Usage
 
-Once Pages is enabled and built, visit:
+Open the site and choose a preset file, provide a relative path, or upload a local file.
 
-`https://welday-ai.github.io/markdown-viewer/`
+Quick links:
 
-## Project structure
-
-- `index.html`: single-page markdown viewer UI
-- `docs/`: markdown files displayed by the viewer
+- `?file=sample.md`
+- `?file=sample.json`
