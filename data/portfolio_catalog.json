@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Idea Incubator",
+    "description": "Concept development.",
+    "url": "https://idea-incubator.com",
+    "icon": "lightbulb"
+  },
+  {
+    "name": "Finally AI",
+    "description": "AI automation.",
+    "url": "https://finally-ai.com",
+    "icon": "bot"
+  },
+  {
+    "name": "Speak Through AI",
+    "description": "AI communication.",
+    "url": "https://speakthroughai.com",
+    "icon": "message-square"
+  },
+  {
+    "name": "AI Consensus",
+    "description": "Data synthesis.",
+    "url": "https://ai-consensus.com",
+    "icon": "network"
+  },
+  {
+    "name": "3D Concepts",
+    "description": "3D modeling.",
+    "url": "https://finally-ai.wixstudio.io",
+    "icon": "box"
+  },
+  {
+    "name": "Drone's Eye",
+    "description": "Aerial data.",
+    "url": "https://droneseyeperspectives.com",
+    "icon": "drone"
+  },
+  {
+    "name": "Groundbnb",
+    "description": "Lodging marketplace.",
+    "url": "https://groundbnb.com",
+    "icon": "building"
+  },
+  {
+    "name": "525600 Minutes",
+    "description": "Productivity.",
+    "url": "https://525600minutes.com",
+    "icon": "clock"
+  },
+  {
+    "name": "One-Click Business",
+    "description": "Business tools.",
+    "url": "https://oneclickbusiness.org",
+    "icon": "briefcase"
+  },
+  {
+    "name": "WhatsNext.is",
+    "description": "Trend forecasting.",
+    "url": "https://whatsnext.is",
+    "icon": "trending-up"
+  }
+]

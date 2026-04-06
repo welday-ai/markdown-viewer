@@ -1,12 +1,23 @@
 # markdown-viewer
 
-Simple static viewer that supports both `.md` and `.json` files.
+Static viewer that supports both `.md` and `.json` files.
 
-## Usage
+## Preloaded Menu
 
-Open the site and choose a preset file, provide a relative path, or upload a local file.
+The menu preloads all markdown files currently in this repo plus the portfolio JSON dataset:
 
-Quick links:
+- `README.md`
+- `docs/README.md`
+- `docs/business-portfolio-summary.md`
+- `docs/engineering-standards.md`
+- `data/portfolio_catalog.json`
 
-- `?file=sample.md`
-- `?file=sample.json`
+## URL Selection
+
+Use `?file=<path>` to load one of the preloaded files directly.
+
+Examples:
+
+- `?file=README.md`
+- `?file=docs/business-portfolio-summary.md`
+- `?file=data/portfolio_catalog.json`

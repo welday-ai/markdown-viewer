@@ -27,9 +27,9 @@
         margin-top: 18px;
         display: grid;
         gap: 10px;
-        grid-template-columns: 170px 1fr auto;
+        grid-template-columns: 1fr auto;
       }
-      select, input[type="text"], input[type="file"], button {
+      select, button {
         border: 1px solid var(--border);
         border-radius: 10px;
         padding: 10px 12px;
@@ -47,10 +47,8 @@
         white-space: pre-wrap;
         line-height: 1.5;
       }
-      .muted { color: var(--muted); }
+      .muted { color: var(--muted); margin-top: 10px; }
       code { background: #eef3ff; padding: 1px 5px; border-radius: 6px; }
-      a { color: var(--accent); text-decoration: none; }
-      a:hover { text-decoration: underline; }
       @media (max-width: 760px) {
         .toolbar { grid-template-columns: 1fr; }
       }
@@ -59,32 +57,32 @@
   <body>
     <main class="wrap">
       <h1>Markdown + JSON Viewer</h1>
-      <p class="sub">View <code>.md</code> and <code>.json</code> files from sample paths, URL params, or local uploads.</p>
+      <p class="sub">Preloaded file menu includes all repo <code>.md</code> files and portfolio JSON.</p>
 
       <div class="toolbar">
-        <select id="preset" aria-label="Preset file">
-          <option value="sample.md">sample.md</option>
-          <option value="sample.json">sample.json</option>
-        </select>
-        <input id="path" type="text" placeholder="Relative file path (e.g. sample.md)" />
+        <select id="preset" aria-label="Preloaded file"></select>
         <button id="loadBtn" type="button">Load</button>
       </div>
 
-      <div class="toolbar">
-        <input id="upload" type="file" accept=".md,.markdown,.json" />
-        <div class="muted">Quick links: <a href="?file=sample.md">?file=sample.md</a> · <a href="?file=sample.json">?file=sample.json</a></div>
-        <div></div>
-      </div>
-
+      <p class="muted" id="hint"></p>
       <article id="viewer" class="viewer">Loading...</article>
     </main>
 
     <script>
+      const FILES = [
+        "README.md",
+        "docs/README.md",
+        "docs/business-portfolio-summary.md",
+        "docs/engineering-standards.md",
+        "data/portfolio_catalog.json"
+      ];
+
       const viewer = document.getElementById("viewer");
       const preset = document.getElementById("preset");
-      const pathInput = document.getElementById("path");
       const loadBtn = document.getElementById("loadBtn");
-      const upload = document.getElementById("upload");
+      const hint = document.getElementById("hint");
+
+      preset.innerHTML = FILES.map((file) => `<option value="${file}">${file}</option>`).join("");
 
       function extensionOf(name) {
         return (name.split(".").pop() || "").toLowerCase();
@@ -100,43 +98,30 @@
       }
 
       async function loadPath(filePath) {
-        if (!filePath) return;
         const res = await fetch(filePath);
         if (!res.ok) throw new Error(`Failed to load ${filePath} (${res.status})`);
         const text = await res.text();
         renderByType(text, extensionOf(filePath));
+        hint.textContent = `Loaded: ${filePath}`;
         const url = new URL(window.location.href);
         url.searchParams.set("file", filePath);
         window.history.replaceState({}, "", url);
       }
 
       loadBtn.addEventListener("click", async () => {
-        const filePath = pathInput.value.trim() || preset.value;
         try {
-          await loadPath(filePath);
+          await loadPath(preset.value);
         } catch (err) {
           viewer.textContent = err.message;
         }
       });
 
-      preset.addEventListener("change", () => {
-        pathInput.value = preset.value;
-      });
+      preset.addEventListener("change", () => loadBtn.click());
 
-      upload.addEventListener("change", async () => {
-        const file = upload.files[0];
-        if (!file) return;
-        const text = await file.text();
-        try {
-          renderByType(text, extensionOf(file.name));
-        } catch (err) {
-          viewer.textContent = err.message;
-        }
-      });
-
-      const initial = new URLSearchParams(window.location.search).get("file") || "sample.md";
-      pathInput.value = initial;
-      preset.value = ["sample.md", "sample.json"].includes(initial) ? initial : "sample.md";
+      const initial = new URLSearchParams(window.location.search).get("file");
+      if (initial && FILES.includes(initial)) {
+        preset.value = initial;
+      }
       loadBtn.click();
     </script>
   </body>
