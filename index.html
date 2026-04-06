@@ -44,8 +44,19 @@
         border-radius: 12px;
         padding: 16px;
         min-height: 260px;
-        white-space: pre-wrap;
         line-height: 1.5;
+      }
+      .viewer pre {
+        background: #eef3ff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow-x: auto;
+        padding: 12px;
+      }
+      .viewer code {
+        background: #eef3ff;
+        border-radius: 6px;
+        padding: 1px 5px;
       }
       .muted { color: var(--muted); margin-top: 10px; }
       code { background: #eef3ff; padding: 1px 5px; border-radius: 6px; }
@@ -68,6 +79,7 @@
       <article id="viewer" class="viewer">Loading...</article>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
       const FILES = [
         "README.md",
@@ -91,7 +103,16 @@
       function renderByType(content, ext) {
         if (ext === "json") {
           const parsed = JSON.parse(content);
-          viewer.textContent = JSON.stringify(parsed, null, 2);
+          viewer.innerHTML = "";
+          const pre = document.createElement("pre");
+          const code = document.createElement("code");
+          code.textContent = JSON.stringify(parsed, null, 2);
+          pre.appendChild(code);
+          viewer.appendChild(pre);
+          return;
+        }
+        if (ext === "md" || ext === "markdown") {
+          viewer.innerHTML = marked.parse(content);
           return;
         }
         viewer.textContent = content;
